@@ -47,6 +47,12 @@ pipeline {
                             )
                         ]
                     )
+                }
+            }
+        }
+        stage('Generate Variabel') {
+            steps {
+                script {
                     sshPublisher(
                         publishers: [
                             sshPublisherDesc(
