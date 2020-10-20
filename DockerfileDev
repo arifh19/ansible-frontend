@@ -1,0 +1,14 @@
+FROM node:lts-alpine
+
+RUN yarn global add http-server
+WORKDIR /app
+COPY package*.json ./
+RUN yarn install
+COPY . .
+ENV VUE_APP_URL='https://api.arifhdev.me'
+ENV VUE_APP_STATIC_URL='https://api.arifhdev.me/public/upload/'
+RUN yarn build
+VOLUME /dist/public
+VOLUME /dist/log
+EXPOSE 8080
+CMD [ "http-server", "dist"]
