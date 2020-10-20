@@ -4,7 +4,7 @@ def REPO = 'arifh19/restaurant-frontend'
 def BRANCH_DEV = 'dev'
 def BRANCH_PROD = 'master'
 def REMOTE_DIR = 'ansibleFrontend'
-def PROJECT_DIR = '/home/ansman/project/restaurant-frontend'
+def PROJECT_DIR = '/home/ansman/project/restaurant-frontend/ansible'
 
 pipeline {
     agent any
