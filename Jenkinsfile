@@ -49,6 +49,25 @@ pipeline {
                     )
                 }
             }
+            steps {
+                script {
+                    sshPublisher(
+                        publishers: [
+                            sshPublisherDesc(
+                                configName: 'ctrl-node',
+                                verbose: false,
+                                transfers: [
+                                    sshTransfer(
+                                        sourceFiles: "ansible/vars.yml",
+                                        remoteDirectory: "${REMOTE_DIR}",
+                                        execTimeout: 120000,
+                                    )
+                                ]
+                            )
+                        ]
+                    )
+                }
+            }
         }
         stage('Build Docker Image') {
             steps {
