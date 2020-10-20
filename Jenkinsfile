@@ -48,8 +48,6 @@ pipeline {
                         ]
                     )
                 }
-            }
-            steps {
                 script {
                     sshPublisher(
                         publishers: [
