@@ -29,7 +29,7 @@ pipeline {
                 echo 'passed'
             }
         }
-        stage('Generate Host') {
+        stage('Build Docker Image') {
             steps {
                 script {
                     sshPublisher(
@@ -48,10 +48,6 @@ pipeline {
                         ]
                     )
                 }
-            }
-        }
-        stage('Generate Variabel') {
-            steps {
                 script {
                     sshPublisher(
                         publishers: [
@@ -69,10 +65,6 @@ pipeline {
                         ]
                     )
                 }
-            }
-        }
-        stage('Build Docker Image') {
-            steps {
                 script {
                     sshPublisher(
                         publishers: [
