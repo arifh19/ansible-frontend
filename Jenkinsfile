@@ -62,7 +62,7 @@ pipeline {
                                     sshTransfer(
                                         sourceFiles: "ansible/builder.yml",
                                         remoteDirectory: "${REMOTE_DIR}",
-                                        execCommand: "ansible-playbook -i hosts ansibleFrontend/builder.yml --extra-vars 'branch=${BRANCH_NAME}'",
+                                        execCommand: "ansible-playbook -i ansibleFrontend/hosts ansibleFrontend/builder.yml --extra-vars 'branch=${BRANCH_NAME}'",
                                         execTimeout: 120000,
                                     )
                                 ]
@@ -84,7 +84,7 @@ pipeline {
                                     sshTransfer(
                                         sourceFiles: "ansible/testing.yml",
                                         remoteDirectory: "${REMOTE_DIR}",
-                                        execCommand: "ansible-playbook -i hosts ansibleFrontend/testing.yml --extra-vars 'branch=${BRANCH_NAME}'",
+                                        execCommand: "ansible-playbook -i ansibleFrontend/hosts ansibleFrontend/testing.yml --extra-vars 'branch=${BRANCH_NAME}'",
                                         execTimeout: 120000,
                                     )
                                 ]
@@ -107,7 +107,7 @@ pipeline {
                                         sshTransfer(
                                             sourceFiles: "ansible/deploy.yml",
                                             remoteDirectory: "${REMOTE_DIR}",
-                                            execCommand: "ansible-playbook -i hosts ansibleFrontend/deployProd.yml --extra-vars 'branch=${BRANCH_NAME}'",
+                                            execCommand: "ansible-playbook -i ansibleFrontend/hosts ansibleFrontend/deployProd.yml --extra-vars 'branch=${BRANCH_NAME}'",
                                             execTimeout: 120000,
                                         )
                                     ]
@@ -124,7 +124,7 @@ pipeline {
                                         sshTransfer(
                                             sourceFiles: "ansible/deploy.yml",
                                             remoteDirectory: "${REMOTE_DIR}",
-                                            execCommand: "ansible-playbook -i hosts ansibleFrontend/deployDev.yml --extra-vars 'branch=${BRANCH_NAME}'",
+                                            execCommand: "ansible-playbook -i ansibleFrontend/hosts ansibleFrontend/deployDev.yml --extra-vars 'branch=${BRANCH_NAME}'",
                                             execTimeout: 120000,
                                         )
                                     ]
