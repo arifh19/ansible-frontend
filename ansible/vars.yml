@@ -1,6 +1,6 @@
 ---
   hub: "arifh19"
-  proj: "frontend"
+  proj: "restaurant-frontend"
   dests: /home/ansman/project
   repo: https://github.com/arifh19/ansible-frontend.git
   urlTest: "http://localhost"

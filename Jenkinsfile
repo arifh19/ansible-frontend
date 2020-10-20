@@ -4,6 +4,7 @@ def REPO = 'arifh19/restaurant-frontend'
 def BRANCH_DEV = 'dev'
 def BRANCH_PROD = 'master'
 def REMOTE_DIR = 'ansibleFrontend'
+def PROJECT_DIR = '/home/ansman/project/restaurant-frontend'
 
 pipeline {
     agent any
@@ -39,43 +40,9 @@ pipeline {
                                 verbose: false,
                                 transfers: [
                                     sshTransfer(
-                                        sourceFiles: "ansible/hosts",
-                                        remoteDirectory: "${REMOTE_DIR}",
-                                        execTimeout: 120000,
-                                    )
-                                ]
-                            )
-                        ]
-                    )
-                }
-                script {
-                    sshPublisher(
-                        publishers: [
-                            sshPublisherDesc(
-                                configName: 'ctrl-node',
-                                verbose: false,
-                                transfers: [
-                                    sshTransfer(
-                                        sourceFiles: "ansible/vars.yml",
-                                        remoteDirectory: "${REMOTE_DIR}",
-                                        execTimeout: 120000,
-                                    )
-                                ]
-                            )
-                        ]
-                    )
-                }
-                script {
-                    sshPublisher(
-                        publishers: [
-                            sshPublisherDesc(
-                                configName: 'ctrl-node',
-                                verbose: false,
-                                transfers: [
-                                    sshTransfer(
                                         sourceFiles: "ansible/builder.yml",
                                         remoteDirectory: "${REMOTE_DIR}",
-                                        execCommand: "ansible-playbook -i ansibleFrontend/hosts ansibleFrontend/builder.yml --extra-vars 'branch=${BRANCH_NAME}'",
+                                        execCommand: "ansible-playbook ${REMOTE_DIR}/builder.yml --extra-vars 'branch=${BRANCH_NAME}'",
                                         execTimeout: 120000,
                                     )
                                 ]
@@ -97,7 +64,7 @@ pipeline {
                                     sshTransfer(
                                         sourceFiles: "ansible/testing.yml",
                                         remoteDirectory: "${REMOTE_DIR}",
-                                        execCommand: "ansible-playbook -i ansibleFrontend/hosts ansibleFrontend/testing.yml --extra-vars 'branch=${BRANCH_NAME}'",
+                                        execCommand: "ansible-playbook -i ${PROJECT_DIR}/hosts ${PROJECT_DIR}/testing.yml --extra-vars 'branch=${BRANCH_NAME}'",
                                         execTimeout: 120000,
                                     )
                                 ]
@@ -120,7 +87,7 @@ pipeline {
                                         sshTransfer(
                                             sourceFiles: "ansible/deploy.yml",
                                             remoteDirectory: "${REMOTE_DIR}",
-                                            execCommand: "ansible-playbook -i ansibleFrontend/hosts ansibleFrontend/deployProd.yml --extra-vars 'branch=${BRANCH_NAME}'",
+                                            execCommand: "ansible-playbook -i ${PROJECT_DIR}/hosts ${PROJECT_DIR}/deployProd.yml --extra-vars 'branch=${BRANCH_NAME}'",
                                             execTimeout: 120000,
                                         )
                                     ]
@@ -137,7 +104,7 @@ pipeline {
                                         sshTransfer(
                                             sourceFiles: "ansible/deploy.yml",
                                             remoteDirectory: "${REMOTE_DIR}",
-                                            execCommand: "ansible-playbook -i ansibleFrontend/hosts ansibleFrontend/deployDev.yml --extra-vars 'branch=${BRANCH_NAME}'",
+                                            execCommand: "ansible-playbook -i ${PROJECT_DIR}/hosts ${PROJECT_DIR}/deployDev.yml --extra-vars 'branch=${BRANCH_NAME}'",
                                             execTimeout: 120000,
                                         )
                                     ]
