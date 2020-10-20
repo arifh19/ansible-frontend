@@ -40,6 +40,23 @@ pipeline {
                                 verbose: false,
                                 transfers: [
                                     sshTransfer(
+                                        sourceFiles: "ansible/vars.yml",
+                                        remoteDirectory: "${REMOTE_DIR}",
+                                        execTimeout: 120000,
+                                    )
+                                ]
+                            )
+                        ]
+                    )
+                }
+                script {
+                    sshPublisher(
+                        publishers: [
+                            sshPublisherDesc(
+                                configName: 'ctrl-node',
+                                verbose: false,
+                                transfers: [
+                                    sshTransfer(
                                         sourceFiles: "ansible/builder.yml",
                                         remoteDirectory: "${REMOTE_DIR}",
                                         execCommand: "ansible-playbook ${REMOTE_DIR}/builder.yml --extra-vars 'branch=${BRANCH_NAME}'",
@@ -62,8 +79,6 @@ pipeline {
                                 verbose: false,
                                 transfers: [
                                     sshTransfer(
-                                        sourceFiles: "ansible/testing.yml",
-                                        remoteDirectory: "${REMOTE_DIR}",
                                         execCommand: "ansible-playbook -i ${PROJECT_DIR}/hosts ${PROJECT_DIR}/testing.yml --extra-vars 'branch=${BRANCH_NAME}'",
                                         execTimeout: 120000,
                                     )
@@ -85,8 +100,6 @@ pipeline {
                                     verbose: false,
                                     transfers: [
                                         sshTransfer(
-                                            sourceFiles: "ansible/deploy.yml",
-                                            remoteDirectory: "${REMOTE_DIR}",
                                             execCommand: "ansible-playbook -i ${PROJECT_DIR}/hosts ${PROJECT_DIR}/deployProd.yml --extra-vars 'branch=${BRANCH_NAME}'",
                                             execTimeout: 120000,
                                         )
@@ -102,8 +115,6 @@ pipeline {
                                     verbose: false,
                                     transfers: [
                                         sshTransfer(
-                                            sourceFiles: "ansible/deploy.yml",
-                                            remoteDirectory: "${REMOTE_DIR}",
                                             execCommand: "ansible-playbook -i ${PROJECT_DIR}/hosts ${PROJECT_DIR}/deployDev.yml --extra-vars 'branch=${BRANCH_NAME}'",
                                             execTimeout: 120000,
                                         )
